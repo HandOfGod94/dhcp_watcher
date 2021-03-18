@@ -30,35 +30,6 @@ defmodule DhcpWatcher.LeaseTest do
   }
   """
 
-  test "module exists" do
-    assert is_atom(Lease.__info__(:module))
-  end
-
-  test "extract ip address" do
-    line = "lease 192.168.0.100 {"
-    assert Lease.parse(Lease.new(), line) == %Lease{ip_address: "192.168.0.100"}
-  end
-
-  test "extract client name" do
-    line = ~s(client-hostname "MyLocalClient";)
-    assert Lease.parse(Lease.new(), line) == %Lease{hostname: "MyLocalClient"}
-  end
-
-  test "extract lease end" do
-    line = ~s(ends 6 2021/02/20 14:21:36;)
-    assert Lease.parse(Lease.new(), line) == %Lease{lease_end: ~N[2021-02-20 14:21:36]}
-  end
-
-  test "extract mac address" do
-    line = ~s(hardware ethernet 12:ab:CD:78:90:91;)
-    assert Lease.parse(Lease.new(), line) == %Lease{mac_address: "12:ab:CD:78:90:91"}
-  end
-
-  test "extract state" do
-    line = ~s(binding state active;)
-    assert Lease.parse(Lease.new(), line) == %Lease{is_active: true}
-  end
-
   test "parse assigned lease" do
     assert %Lease{
              ip_address: "192.168.0.1",
