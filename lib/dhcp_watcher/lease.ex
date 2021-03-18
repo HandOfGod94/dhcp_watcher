@@ -1,5 +1,5 @@
 defmodule DhcpWatcher.Lease do
-  defstruct [:ip_address, :hostname, :mac_address, :lease_end]
+  defstruct [:ip_address, :hostname, :mac_address, :lease_end, is_active: false]
 
   def new, do: %__MODULE__{}
 
@@ -7,25 +7,17 @@ defmodule DhcpWatcher.Lease do
     String.trim(lines)
     |> String.split("\n")
     |> Enum.map(&String.trim/1)
-    |> Enum.reduce(new(), fn line, lease -> parse(lease, line) end)
+    |> Enum.reduce(new(), fn line, lease -> do_parse(lease, line) end)
   end
 
-  def parse(lease, line) do
+  defp do_parse(lease, line) do
     case line do
-      "lease " <> msg ->
-        %{lease | ip_address: extract({:ip_address, msg})}
-
-      "client-hostname " <> msg ->
-        %{lease | hostname: extract({:hostname, msg})}
-
-      "ends " <> msg ->
-        %{lease | lease_end: extract({:lease_end, msg})}
-
-      "hardware " <> msg ->
-        %{lease | mac_address: extract({:mac_address, msg})}
-
-      _ ->
-        lease
+      "lease " <> msg -> %{lease | ip_address: extract({:ip_address, msg})}
+      "client-hostname " <> msg -> %{lease | hostname: extract({:hostname, msg})}
+      "ends " <> msg -> %{lease | lease_end: extract({:lease_end, msg})}
+      "hardware ethernet " <> msg -> %{lease | mac_address: extract({:mac_address, msg})}
+      "binding state active;" -> %{lease | is_active: true}
+      _ -> lease
     end
   end
 
@@ -36,8 +28,7 @@ defmodule DhcpWatcher.Lease do
   end
 
   defp extract({:mac_address, msg}) do
-    tokens = msg |> String.split(" ")
-    tokens |> Enum.at(-1) |> String.trim_trailing(";")
+    msg |> String.trim_trailing(";")
   end
 
   defp extract({:lease_end, msg}) do
