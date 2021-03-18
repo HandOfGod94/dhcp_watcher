@@ -1,5 +1,5 @@
 defmodule DhcpWatcher.DatabaseTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest DhcpWatcher.Database
   alias DhcpWatcher.{Database, Lease}
 
@@ -52,6 +52,6 @@ defmodule DhcpWatcher.DatabaseTest do
   end
 
   test "return empty database for invalid format" do
-    assert Database.read("foo") == [%Lease{}]
+    assert Database.get_all_lease("foo") == [%Lease{}]
   end
 end

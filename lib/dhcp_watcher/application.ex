@@ -9,7 +9,7 @@ defmodule DhcpWatcher.Application do
   def start(_type, _args) do
     children = [
       # Starts a worker by calling: DhcpWatcher.Worker.start_link(arg)
-      # {DhcpWatcher.Worker, arg}
+      {DhcpWatcher.Worker, dirs: [Application.fetch_env!(:dhcp_watcher, :dhcp_file)]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

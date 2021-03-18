@@ -1,5 +1,5 @@
 defmodule DhcpWatcher.LeaseTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest DhcpWatcher.Lease
   alias DhcpWatcher.Lease
 
