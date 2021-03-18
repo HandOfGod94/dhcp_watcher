@@ -1,21 +1,23 @@
 # DhcpWatcher
 
-**TODO: Add description**
+Watch DHCP file and publish lease assignments with prometheus metrics.
+This can then be visualized as table on `grafana`.
 
-## Installation
+## Commands
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `dhcp_watcher` to your list of dependencies in `mix.exs`:
+```sh
+# run tests
+mix test
 
-```elixir
-def deps do
-  [
-    {:dhcp_watcher, "~> 0.1.0"}
-  ]
-end
+# start server
+mix run --no-halt
+
+# create raspberry-pi-4 build
+earthly +build
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/dhcp_watcher](https://hexdocs.pm/dhcp_watcher).
+## Pre-requisite
 
+- `inotify-tools` if you are running on linux
+- earthly
+- elixir v1.11
