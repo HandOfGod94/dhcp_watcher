@@ -1,7 +1,7 @@
 defmodule DhcpWatcher.Worker do
   use GenServer
   require Logger
-  alias DhcpWatcher.Database
+  alias DhcpWatcher.{Database, Instrumenter}
 
   def start_link(args) do
     GenServer.start_link(__MODULE__, args)
@@ -21,6 +21,7 @@ defmodule DhcpWatcher.Worker do
     path
     |> File.read!()
     |> Database.get_all_lease()
+    |> Enum.map(&Instrumenter.publish_lease/1)
 
     {:noreply, state}
   end

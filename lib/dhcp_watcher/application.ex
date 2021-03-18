@@ -1,4 +1,5 @@
 defmodule DhcpWatcher.Application do
+  alias DhcpWatcher.Instrumenter
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,6 +9,7 @@ defmodule DhcpWatcher.Application do
   @impl true
   def start(_type, _args) do
     MetricsPlugExporter.setup()
+    Instrumenter.setup()
 
     children = [
       # Starts a worker by calling: DhcpWatcher.Worker.start_link(arg)

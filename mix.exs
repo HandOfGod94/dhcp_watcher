@@ -25,9 +25,8 @@ defmodule DhcpWatcher.MixProject do
       {:file_system, "~> 0.2"},
       {:plug_cowboy, "~> 2.0"},
       {:prometheus_ex, "~> 3.0"},
-      {:prometheus_plugs, "~> 1.1"}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:prometheus_plugs, "~> 1.1"},
+      {:timex, "~> 3.7"}
     ]
   end
 end
