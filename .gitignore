@@ -25,3 +25,7 @@ dhcp_watcher-*.tar
 
 # Temporary files for e.g. tests
 /tmp
+.idea/
+*.iml
+.elixir_ls/
+.vscode/
