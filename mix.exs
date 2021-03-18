@@ -7,7 +7,14 @@ defmodule DhcpWatcher.MixProject do
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      xref: [exclude: [:mnesia]],
+      releases: [
+        dhcp_watcher: [
+          include_executables_for: [:unix],
+          steps: [:assemble, :tar]
+        ]
+      ]
     ]
   end
 
@@ -26,7 +33,6 @@ defmodule DhcpWatcher.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:prometheus_ex, "~> 3.0"},
       {:prometheus_plugs, "~> 1.1"},
-      {:timex, "~> 3.7"}
     ]
   end
 end

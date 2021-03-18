@@ -19,6 +19,12 @@ defmodule DhcpWatcher.Instrumenter do
         lease.mac_address,
         lease.is_active
       ]
-    ], Timex.to_unix(lease.lease_end))
+    ], to_unix(lease.lease_end))
+  end
+
+  defp to_unix(naive_datetime) do
+    naive_datetime
+    |> DateTime.from_naive!("Etc/UTC")
+    |> DateTime.to_unix()
   end
 end

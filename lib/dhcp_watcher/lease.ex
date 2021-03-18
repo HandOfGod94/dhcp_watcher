@@ -1,5 +1,5 @@
 defmodule DhcpWatcher.Lease do
-  defstruct [:ip_address, :hostname, :mac_address, :lease_end, is_active: false]
+  defstruct [:ip_address, :lease_end, hostname: "", mac_address: "", is_active: false]
 
   def new, do: %__MODULE__{}
 

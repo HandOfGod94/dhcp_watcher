@@ -29,3 +29,4 @@ dhcp_watcher-*.tar
 *.iml
 .elixir_ls/
 .vscode/
+*.tar.gz

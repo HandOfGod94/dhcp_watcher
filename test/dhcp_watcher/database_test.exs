@@ -30,7 +30,7 @@ defmodule DhcpWatcher.DatabaseTest do
     """
 
     test "parsing success" do
-      result = Database.read(@valid)
+      result = Database.get_all_lease(@valid)
 
       assert result == [
                %Lease{
@@ -45,7 +45,7 @@ defmodule DhcpWatcher.DatabaseTest do
                  lease_end: ~N[2021-02-24 14:48:54],
                  is_active: false,
                  mac_address: "12:ab:CD:78:90:91",
-                 hostname: nil
+                 hostname: ""
                }
              ]
     end

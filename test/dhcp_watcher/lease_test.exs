@@ -25,7 +25,6 @@ defmodule DhcpWatcher.LeaseTest do
     tstp 3 2021/02/24 14:48:54;
     cltt 3 2021/02/24 12:48:54;
     binding state free;
-    hardware ethernet 12:ab:CD:78:90:91;
     uid "\001\306\325J\035\372'";
   }
   """
@@ -43,9 +42,9 @@ defmodule DhcpWatcher.LeaseTest do
   test "parse unassigned_lease" do
     assert %Lease{
              ip_address: "192.168.0.100",
-             hostname: nil,
+             hostname: "",
              is_active: false,
-             mac_address: "12:ab:CD:78:90:91",
+             mac_address: "",
              lease_end: ~N[2021-02-24 14:48:54]
            } == Lease.parse(@unassigned_lease)
   end
