@@ -6,7 +6,7 @@ defmodule DhcpWatcher.Lease do
   def parse(lines) do
     String.trim(lines)
     |> String.split("\n")
-    |> Enum.map(&String.trim/1)
+    |> Stream.map(&String.trim/1)
     |> Enum.reduce(new(), fn line, lease -> do_parse(lease, line) end)
   end
 

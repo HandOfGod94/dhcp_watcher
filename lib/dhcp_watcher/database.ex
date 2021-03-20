@@ -6,13 +6,14 @@ defmodule DhcpWatcher.Database do
     Logger.info("starting parsing dhcp database file")
 
     lease_list =
-      content
-      |> String.trim()
+      String.trim(content)
       |> String.split("}")
-      |> Stream.filter(&(&1 != ""))
+      |> Stream.filter(&blank_string?/1)
       |> Enum.map(&Lease.parse/1)
 
     Logger.info("database file parsing complete")
     lease_list
   end
+
+  defp blank_string?(str), do: str == ""
 end

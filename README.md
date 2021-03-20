@@ -21,3 +21,10 @@ earthly +build
 - `inotify-tools` if you are running on linux
 - earthly
 - elixir v1.11
+
+## Deploy to prometheus to pi (using ansible)
+
+```sh
+# deploy prometheus
+ansible-playbook -i playbooks/hosts playbooks/prometheus.yml -k
+```

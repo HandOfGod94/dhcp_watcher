@@ -1,0 +1,49 @@
+---
+- hosts: pi
+  remote_user: pi
+  roles:
+    - cloudalchemy.prometheus
+    - cloudalchemy.node-exporter
+    - cloudalchemy.alertmanager
+  vars:
+    node_exporter_version: 1.1.0
+    alertmanager_version: 0.21.0
+    prometheus_version: 2.24.1
+    prometheus_storage_retention: "14d"
+    prometheus_storage_retention_size: "2GB"
+    prometheus_scrape_configs:
+      - job_name: "prometheus"
+        scrape_interval: "60s"
+        metrics_path: "/metrics"
+        static_configs:
+          - targets: ["localhost:9090"]
+      - job_name: "node_status"
+        scrape_interval: "60s"
+        metrics_path: "/metrics"
+        static_configs:
+          - targets: ["localhost:9100"]
+      - job_name: "router_stats"
+        scrape_interval: "120s"
+        metrics_path: "/metrics"
+        static_configs:
+          - targets: ["localhost:4001"]
+    prometheus_alertmanager_config:
+      - static_configs:
+          - targets: ["localhost:9093"]
+    alertmanager_slack_api_url: "{{slack_hook_url}}"
+    alertmanager_receivers:
+      - name: "empty"
+      - name: slack
+        slack_configs:
+          - send_resolved: true
+            channel: "#alerts"
+    alertmanager_route:
+      group_by: ["alertname", "service", "job"]
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 3h
+      receiver: slack
+      routes:
+      - receiver: "empty"
+        match:
+          alertname: Watchdog

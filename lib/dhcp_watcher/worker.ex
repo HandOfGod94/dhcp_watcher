@@ -21,7 +21,7 @@ defmodule DhcpWatcher.Worker do
     path
     |> File.read!()
     |> Database.get_all_lease()
-    |> Enum.map(&Instrumenter.publish_lease/1)
+    |> Enum.each(&Instrumenter.publish_lease/1)
 
     {:noreply, state}
   end
