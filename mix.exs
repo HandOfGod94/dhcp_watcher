@@ -29,10 +29,10 @@ defmodule DhcpWatcher.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:file_system, "~> 0.2"},
       {:plug_cowboy, "~> 2.0"},
       {:prometheus_ex, "~> 3.0"},
       {:prometheus_plugs, "~> 1.1"},
+      {:jason, "~> 1.2"}
     ]
   end
 end

@@ -8,7 +8,7 @@ defmodule DhcpWatcher.Database do
     lease_list =
       String.trim(content)
       |> String.split("}")
-      |> Stream.filter(&blank_string?/1)
+      |> Stream.reject(&blank_string?/1)
       |> Enum.map(&Lease.parse/1)
 
     Logger.info("database file parsing complete")

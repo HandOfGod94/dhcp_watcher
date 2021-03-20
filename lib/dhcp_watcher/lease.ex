@@ -1,4 +1,5 @@
 defmodule DhcpWatcher.Lease do
+  @derive Jason.Encoder
   defstruct [:ip_address, :lease_end, hostname: "", mac_address: "", is_active: false]
 
   def new, do: %__MODULE__{}
@@ -7,10 +8,10 @@ defmodule DhcpWatcher.Lease do
     String.trim(lines)
     |> String.split("\n")
     |> Stream.map(&String.trim/1)
-    |> Enum.reduce(new(), fn line, lease -> do_parse(lease, line) end)
+    |> Enum.reduce(new(), &do_parse/2)
   end
 
-  defp do_parse(lease, line) do
+  defp do_parse(line, lease) do
     case line do
       "lease " <> msg -> %{lease | ip_address: extract({:ip_address, msg})}
       "client-hostname " <> msg -> %{lease | hostname: extract({:hostname, msg})}
