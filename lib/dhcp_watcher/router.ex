@@ -4,7 +4,6 @@ end
 
 defmodule DhcpWatcher.Router do
   use Plug.Router
-  alias DhcpWatcher.Database
 
   plug(MetricsPlugExporter)
   plug(:match)
@@ -17,8 +16,7 @@ defmodule DhcpWatcher.Router do
     leases =
       @path
       |> File.read!()
-      |> Database.get_all_lease()
-      |> Enum.filter(&(&1.is_active == true))
+      |> DhcpWatcher.get_future_lease()
 
     send_resp(conn, 200, Jason.encode!(leases))
   end

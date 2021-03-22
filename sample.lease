@@ -1,0 +1,11 @@
+lease 192.168.0.1 {
+  starts 6 2021/03/20 12:22:55;
+  ends 6 2025/03/20 12:32:55;
+  cltt 6 2021/03/20 12:22:55;
+  binding state active;
+  next binding state free;
+  rewind binding state free;
+  hardware ethernet 12:23:45:56:78:90;
+  set vendor-class-identifier = "dhcpcd-6.8.2:Linux-3.8.13+:armv7l:Marvell";
+  client-hostname "Chromecast";
+}

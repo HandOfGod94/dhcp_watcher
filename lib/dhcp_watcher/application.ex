@@ -1,4 +1,5 @@
 defmodule DhcpWatcher.Application do
+  require Logger
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -16,6 +17,7 @@ defmodule DhcpWatcher.Application do
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
+    Logger.info("starting server")
     opts = [strategy: :one_for_one, name: DhcpWatcher.Supervisor]
     Supervisor.start_link(children, opts)
   end

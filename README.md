@@ -25,6 +25,9 @@ earthly +build
 ## Deploy to prometheus to pi (using ansible)
 
 ```sh
+# deploy app
+ansible-playbook -i playbooks/hosts playbooks/deploy.yml -k
+
 # deploy prometheus
 ansible-playbook -i playbooks/hosts playbooks/prometheus.yml -k
 ```

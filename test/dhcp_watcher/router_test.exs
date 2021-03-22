@@ -13,7 +13,7 @@ defmodule DhcpWatcher.RouterTest do
                  "hostname" => "Chromecast",
                  "ip_address" => "192.168.0.1",
                  "is_active" => true,
-                 "lease_end" => "2021-03-20T12:32:55",
+                 "lease_end" => "2025-03-20T12:32:55",
                  "mac_address" => "12:23:45:56:78:90"
                }
              ]
