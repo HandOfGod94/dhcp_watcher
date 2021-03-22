@@ -37,6 +37,7 @@
       admin_password: qwer1234
     grafana_plugins:
       - marcusolsson-json-datasource
+      - grafana-piechart-panel
     grafana_url: "http://localhost:3000"
     grafana_datasources:
       - name: prometheus

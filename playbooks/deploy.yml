@@ -5,17 +5,15 @@
   tasks:
     - name: Create Apps directory to deploy
       ansible.builtin.file:
-        path: ~/apps/dhcp_watcher
+        path: /home/pi/apps/dhcp_watcher
         state: directory
 
     - name: Deploy app to raspberry pi
-      copy:
-        src: ../dhcp_watcher-0.1.0.tar.gz
-        dest: ~/apps/dhcp_watcher/
-        mode: preserve
-        force: yes
-    
-    - name: Extract dhcp_watcher tarball
       ansible.builtin.unarchive:
-        src: ~/apps/dhcp_watcher/dhcp_watcher-0.1.0.tar.gz
-        dest: ~/app/dhcp_watcher/
+        src: ../dhcp_watcher-0.1.0.tar.gz
+        dest: /home/pi/apps/dhcp_watcher
+
+    - name: Start server
+      command: /home/pi/apps/dhcp_watcher/bin/dhcp_watcher daemon
+      register: result
+      failed_when: result.rc != 0
