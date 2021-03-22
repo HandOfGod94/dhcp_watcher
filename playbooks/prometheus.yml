@@ -5,10 +5,12 @@
     - cloudalchemy.prometheus
     - cloudalchemy.node-exporter
     - cloudalchemy.alertmanager
+    - cloudalchemy.grafana
   vars:
     node_exporter_version: 1.1.0
     alertmanager_version: 0.21.0
     prometheus_version: 2.24.1
+    grafana_version: 7.4.5
     prometheus_storage_retention: "14d"
     prometheus_storage_retention_size: "2GB"
     prometheus_scrape_configs:
@@ -30,9 +32,21 @@
     prometheus_alertmanager_config:
       - static_configs:
           - targets: ["localhost:9093"]
-    alertmanager_slack_api_url: "{{slack_hook_url}}"
+    grafana_security:
+      admin_user: admin
+      admin_password: qwer1234
+    grafana_plugins:
+      - marcusolsson-json-datasource
+    grafana_url: "http://localhost:3000"
+    grafana_datasources:
+      - name: prometheus
+        type: prometheus
+        access: proxy
+        url: 'http://localhost:9090'
+        basicAuth: false
+    alertmanager_slack_api_url: "{{slack_api_url}}"
     alertmanager_receivers:
-      - name: "empty"
+      - name: empty
       - name: slack
         slack_configs:
           - send_resolved: true
@@ -44,6 +58,6 @@
       repeat_interval: 3h
       receiver: slack
       routes:
-      - receiver: "empty"
+      - receiver: empty
         match:
           alertname: Watchdog
