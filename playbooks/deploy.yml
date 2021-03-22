@@ -3,6 +3,14 @@
   remote_user: pi
 
   tasks:
+    - name: Stops old release
+      command: /home/pi/apps/dhcp_watcher/bin/dhcp_watcher stop
+      ignore_errors: yes
+
+    - name: Clean up app dir
+      shell: /bin/rm -rf /home/pi/apps/dhcp_watcher/*
+      ignore_errors: yes
+
     - name: Create Apps directory to deploy
       ansible.builtin.file:
         path: /home/pi/apps/dhcp_watcher

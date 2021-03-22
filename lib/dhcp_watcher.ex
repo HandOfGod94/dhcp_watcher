@@ -5,8 +5,10 @@ defmodule DhcpWatcher do
   def get_future_lease(content) do
     content
     |> get_all_lease()
-    |> Enum.filter(&(&1.is_active == true))
-    |> Enum.filter(&(NaiveDateTime.compare(&1.lease_end, NaiveDateTime.utc_now()) == :gt))
+    |> Stream.filter(&(&1.is_active == true))
+    |> Stream.filter(&(NaiveDateTime.compare(&1.lease_end, NaiveDateTime.utc_now()) == :gt))
+    |> Enum.sort_by(& &1.lease_end, :desc)
+    |> Enum.uniq_by(& &1.ip_address)
   end
 
   def get_all_lease(content) do
