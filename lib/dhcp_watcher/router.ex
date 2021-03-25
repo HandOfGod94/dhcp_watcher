@@ -1,4 +1,5 @@
 defmodule MetricsPlugExporter do
+  @moduledoc false
   use Prometheus.PlugExporter
 end
 
@@ -10,7 +11,7 @@ defmodule DhcpWatcher.Router do
   plug(:dispatch)
   plug(Plug.Parsers, parsers: [:urlencoded, {:json, json_decoder: Jason}])
 
-  @path Application.fetch_env!(:dhcp_watcher, :dhcp_file)
+  @path Application.compile_env!(:dhcp_watcher, :dhcp_file)
 
   get "/lease" do
     leases =

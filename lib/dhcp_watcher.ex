@@ -1,4 +1,12 @@
 defmodule DhcpWatcher do
+  @moduledoc """
+  Reads DHCP database file, generally located at `/var/lib/dhcp/dhcpd.leases`
+  and expose lease info at `GET /lease` endpoint.
+
+  This information can then be ingested in `grafana` or any other dashboards which support
+  json-api as source, for visualizing it as table.
+  """
+
   require Logger
   alias __MODULE__.Lease
 

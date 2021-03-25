@@ -1,4 +1,28 @@
 defmodule DhcpWatcher.Lease do
+  @moduledoc """
+  Parser for individual lease entry in `dhcp.lease` file
+
+  ## Examples
+
+
+    iex> raw_lease = ~s(
+    ...>   lease 192.168.0.1 {
+    ...>     starts 6 2021/02/20 14:11:36;
+    ...>     ends 6 2021/02/20 14:21:36;
+    ...>     cltt 6 2021/02/20 14:11:36;
+    ...>     binding state active;
+    ...>     next binding state free;
+    ...>     rewind binding state free;
+    ...>     hardware ethernet 12:ab:CD:78:90:91;
+    ...>     uid "\001\204\330\033E\023=";
+    ...>     set vendor-class-identifier = "MSFT 5.0";
+    ...>     client-hostname "MyLocalClient";
+    ...>   }
+    ...> )
+    iex> Lease.parse(raw_lease)
+    %Lease{ip_address: "192.168.0.1", hostname: "MyLocalClient", is_active: true, mac_address: "12:ab:CD:78:90:91", lease_end: ~N[2021-02-20 14:21:36]}
+  """
+
   @type t :: %__MODULE__{
           ip_address: binary() | nil,
           lease_end: NaiveDateTime.t() | nil,
