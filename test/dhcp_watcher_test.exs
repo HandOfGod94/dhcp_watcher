@@ -88,7 +88,7 @@ defmodule DhcpWatcherTest do
              ]
     end
 
-    test "get_active_lease/0 - returns only active lease after deduping that will expire in future" do
+    test "get_active_lease/0 - return deduped lease entries that are expiring in future" do
       result = DhcpWatcher.get_future_lease(@valid)
 
       assert result == [
