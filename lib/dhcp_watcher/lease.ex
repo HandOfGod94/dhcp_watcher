@@ -1,9 +1,19 @@
 defmodule DhcpWatcher.Lease do
+  @type t :: %__MODULE__{
+          ip_address: binary() | nil,
+          lease_end: NaiveDateTime.t() | nil,
+          hostname: binary(),
+          mac_address: binary(),
+          is_active: boolean()
+        }
+
   @derive Jason.Encoder
   defstruct [:ip_address, :lease_end, hostname: "", mac_address: "", is_active: false]
 
+  @spec new() :: t()
   def new, do: %__MODULE__{}
 
+  @spec parse(binary()) :: t()
   def parse(lines) do
     String.trim(lines)
     |> String.split("\n")
@@ -13,12 +23,23 @@ defmodule DhcpWatcher.Lease do
 
   defp do_parse(line, lease) do
     case line do
-      "lease " <> msg -> %{lease | ip_address: extract({:ip_address, msg})}
-      "client-hostname " <> msg -> %{lease | hostname: extract({:hostname, msg})}
-      "ends " <> msg -> %{lease | lease_end: extract({:lease_end, msg})}
-      "hardware ethernet " <> msg -> %{lease | mac_address: extract({:mac_address, msg})}
-      "binding state active;" -> %{lease | is_active: true}
-      _ -> lease
+      "lease " <> msg ->
+        %{lease | ip_address: extract({:ip_address, msg})}
+
+      "client-hostname " <> msg ->
+        %{lease | hostname: extract({:hostname, msg})}
+
+      "ends " <> msg ->
+        %{lease | lease_end: extract({:lease_end, msg})}
+
+      "hardware ethernet " <> msg ->
+        %{lease | mac_address: extract({:mac_address, msg})}
+
+      "binding state active;" ->
+        %{lease | is_active: true}
+
+      _ ->
+        lease
     end
   end
 

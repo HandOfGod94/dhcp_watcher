@@ -30,3 +30,5 @@ dhcp_watcher-*.tar
 .elixir_ls/
 .vscode/
 *.tar.gz
+/priv/plts/*.plt
+/priv/plts/*.plt.hash

@@ -14,6 +14,11 @@ defmodule DhcpWatcher.MixProject do
           include_executables_for: [:unix],
           steps: [:assemble, :tar]
         ]
+      ],
+      dialyzer: [
+        plt_add_deps: :transitive,
+        flags: [:error_handling, :race_conditions],
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ]
     ]
   end
@@ -32,7 +37,8 @@ defmodule DhcpWatcher.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:prometheus_ex, "~> 3.0"},
       {:prometheus_plugs, "~> 1.1"},
-      {:jason, "~> 1.2"}
+      {:jason, "~> 1.2"},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 end

@@ -2,6 +2,9 @@ defmodule DhcpWatcher do
   require Logger
   alias __MODULE__.Lease
 
+  @typep lease_db :: binary()
+
+  @spec get_future_lease(lease_db()) :: [Lease.t()]
   def get_future_lease(content) do
     content
     |> get_all_lease()
@@ -11,6 +14,7 @@ defmodule DhcpWatcher do
     |> Enum.uniq_by(& &1.ip_address)
   end
 
+  @spec get_all_lease(lease_db()) :: [Lease.t()]
   def get_all_lease(content) do
     Logger.info("starting parsing dhcp database file")
 
