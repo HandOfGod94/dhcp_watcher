@@ -14,6 +14,9 @@ mix run --no-halt
 
 # create raspberry-pi-4 build
 earthly +build
+
+# create background service
+mix create_systemd_service
 ```
 
 ## Pre-requisite

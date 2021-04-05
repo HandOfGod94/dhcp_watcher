@@ -1,15 +1,18 @@
 ---
 - hosts: pi
   remote_user: pi
+  vars:
+    app_name: dhcp_watcher
 
   tasks:
     - name: Stops old release
-      command: /home/pi/apps/dhcp_watcher/bin/dhcp_watcher stop
+      command: systemctl stop {{ app_name }}.service --user
       ignore_errors: yes
 
     - name: Clean up app dir
-      shell: /bin/rm -rf /home/pi/apps/dhcp_watcher/*
-      ignore_errors: yes
+      ansible.builtin.file:
+        path: /home/pi/apps/dhcp_watcher
+        state: absent
 
     - name: Create Apps directory to deploy
       ansible.builtin.file:
@@ -18,10 +21,23 @@
 
     - name: Deploy app to raspberry pi
       ansible.builtin.unarchive:
-        src: ../dhcp_watcher-0.1.0.tar.gz
-        dest: /home/pi/apps/dhcp_watcher
+        src: ../{{ app_name }}-0.1.0.tar.gz
+        dest: /home/pi/apps/{{ app_name }}
+        creates: /home/pi/apps/{{ app_name }}/bin/
+
+    - name: Create systemd config dir
+      ansible.builtin.file:
+        path: /home/pi/.config/systemd/user
+        state: directory
+
+    - name: Deploy systemd config
+      ansible.builtin.copy:
+        src: "../{{ app_name }}.service"
+        dest: /home/pi/.config/systemd/user/{{ app_name }}.service
+        owner: pi
+        group: pi
 
     - name: Start server
-      command: /home/pi/apps/dhcp_watcher/bin/dhcp_watcher daemon
+      command:  systemctl start {{ app_name }}.service
       register: result
       failed_when: result.rc != 0

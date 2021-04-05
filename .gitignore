@@ -32,3 +32,4 @@ dhcp_watcher-*.tar
 *.tar.gz
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
+dhcp_watcher.service

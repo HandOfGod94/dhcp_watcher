@@ -8,6 +8,7 @@ defmodule DhcpWatcher.MixProject do
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
       xref: [exclude: [:mnesia]],
       releases: [
         dhcp_watcher: [
@@ -41,5 +42,22 @@ defmodule DhcpWatcher.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
+  end
+
+  defp aliases do
+    [
+      create_systemd_service: &create_systemd_service/1
+    ]
+  end
+
+  defp create_systemd_service(_) do
+    content =
+      "./priv/"
+      |> Path.join("systemd.sevice.eex")
+      |> EEx.eval_file(app_name: "dhcp_watcher")
+
+    file = File.open!("dhcp_watcher.service", [:write])
+    IO.write(file, content)
+    File.close(file)
   end
 end
