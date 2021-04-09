@@ -1,6 +1,6 @@
 # DhcpWatcher
 
-Reads DHCP file and exposes at `/lease` endpoint
+Reads DHCP file and exposes at `/lease` endpoint.  
 This can then be visualized as table on `grafana`.
 
 ## Commands
