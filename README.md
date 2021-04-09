@@ -1,6 +1,6 @@
 # DhcpWatcher
 
-Watch DHCP file and publish lease assignments with prometheus metrics.
+Reads DHCP file and exposes at `/lease` endpoint
 This can then be visualized as table on `grafana`.
 
 ## Commands
