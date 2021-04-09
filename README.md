@@ -21,7 +21,6 @@ mix create_systemd_service
 
 ## Pre-requisite
 
-- `inotify-tools` if you are running on linux
 - earthly
 - elixir v1.11
 
