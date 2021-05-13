@@ -14,4 +14,4 @@ ExecStart=/home/pi/apps/<%= app_name %>/bin/<%= app_name %> start
 ExecStop=/home/pi/apps/<%= app_name %>/bin/<%= app_name %> stop
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

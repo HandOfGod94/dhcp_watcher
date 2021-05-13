@@ -38,6 +38,6 @@
         group: pi
 
     - name: Start server
-      command:  systemctl start {{ app_name }}.service
+      command:  systemctl start {{ app_name }}.service --user
       register: result
       failed_when: result.rc != 0
