@@ -37,6 +37,11 @@
         owner: pi
         group: pi
 
+    - name: Enable systemd service
+      command:  systemctl enable {{ app_name }}.service --user
+      register: result
+      failed_when: result.rc != 0
+
     - name: Start server
       command:  systemctl start {{ app_name }}.service --user
       register: result

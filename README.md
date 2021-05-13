@@ -24,12 +24,11 @@ mix create_systemd_service
 - earthly
 - elixir v1.11
 
-## Deploy to prometheus to pi (using ansible)
+## Deploy to pi (using ansible)
 
 ```sh
 # deploy app
+earthly +build
+mix create_systemd_service
 ansible-playbook -i playbooks/hosts playbooks/deploy.yml -k
-
-# deploy prometheus
-ansible-playbook -i playbooks/hosts playbooks/prometheus.yml -k
 ```
